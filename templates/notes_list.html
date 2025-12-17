@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+{% block title %} Kanxo {% endblock title %}
+
+<h1>Notes</h1>
+
+<form action="{% url 'list' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name=" q">
+    <a href="{ % url 'search' % }" class="btn">Search</a>
+    <a href="{ % url 'create' % }" class="btn">Create Note</a>
+</form>
+<ul>
+        {% for i in search_list %}
+            <li>
+                {{ i.title }}
+               
+            </li>
+        {% empty %}
+            <li>No notes found</li>
+        {% endfor %}
+        </ul>
+
+
+{% for x in object_list %}
+<div class="card">
+
+    <div>
+        {% if x.pinned %}
+                    <span class="pinned-icon">📌</span>
+                {% endif %}
+        <h2>{{ x.title }}</h2>
+        
+    </div>
+
+    <div class="card-sidebar">
+        <a href="{% url 'detail' x.pk %}" class="btn btn-view">View</a>
+        <a href="{% url 'edit' x.pk %}" class="btn btn-edit">Edit</a>
+        <a href="{% url 'delete' x.pk %}" class="btn btn-delete">Delete</a>
+    </div>
+
+</div>   <!-- ✅ card closed -->
+{% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static%}
+<h2>Create Note</h2>
+
+<form action ="{% url 'create' %}" method="post"  enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <button class="btn">Save</button>
+</form>
+
+{% endblock content %}
